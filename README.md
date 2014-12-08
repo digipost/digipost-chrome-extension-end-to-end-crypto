@@ -11,6 +11,6 @@ Filer
 
 Biblioteker
 -----------
-* **gzip.js** - node modul - Kjørt gjennom browserify og ednre for å legge til gzip på window
-* **forge.bundle.js** - node modul - bygget med npm run minify - patchet versjon for å støtte PKCS#7 recipientInfo version 2
+* **gzip.js** - node modul - Kjørt gjennom browserify og endret for å legge til gzip på window
+* **forge.bundle.js** - node-forge patchet med https://github.com/digitalbazaar/forge/pull/201 og bygget med npm run minify
 
