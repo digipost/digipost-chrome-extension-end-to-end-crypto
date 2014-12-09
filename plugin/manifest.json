@@ -30,6 +30,7 @@
       "js" : [ 
         "js/vendor/forge.bundle.js", 
         "js/vendor/gzip.js", 
+        "js/vendor/purify.js", 
         "js/content_script.js" 
       ], 
       "run_at" : "document_end", 

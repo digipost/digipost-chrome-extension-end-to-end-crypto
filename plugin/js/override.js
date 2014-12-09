@@ -1,11 +1,23 @@
 console.log("Injecting...");
-dp.embed.normalize_original = dp.embed.normalize;
-dp.embed.normalize = function(url) { 
-	if (url.indexOf("blob:") === 0) {
-		return url;
+
+if (dp.url) {
+	dp.url.real_normalize = dp.url.normalize;
+	dp.url.normalize = function(url) { 
+		if (url.indexOf("blob:") === 0) {
+			return url;
+		}
+		return dp.url.real_normalize(url);
 	}
-	return dp.embed.normalize_original(url);
-};
+}
+
+if (dp.embed) {
+	dp.embed.real_html = dp.embed.html;
+	dp.embed.html = function(options) {
+		var options = options || {};
+		options.sandbox = '';
+		return dp.embed.real_html(options);
+	}
+}
 
 if (dp.views.content) {
 	dp.views.content.init_original = dp.views.content.init;
@@ -20,6 +32,7 @@ if (dp.views.content) {
 			};
 			view.imageUrl = view.doc.contentUri;
 			dp.views.content.init_original.apply(view);
+			dp.sizes.update($(".doc"))
 		}
 
 		document.dispatchEvent(new CustomEvent('start', { detail: this.doc.contentUri() } ));
