@@ -18,7 +18,10 @@
     "activeTab"
   ],
   "background" : {
-    "scripts" : [ "js/background.js"]
+    "scripts" : [ 
+      "js/vendor/forge.bundle.js", 
+      "js/background.js"
+    ]
   },
   "page_action": {
     "default_icon" : "icons/app48.png",
