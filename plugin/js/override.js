@@ -32,9 +32,10 @@ if (dp.views.content) {
 			};
 			view.imageUrl = view.doc.contentUri;
 			dp.views.content.init_original.apply(view);
-			dp.sizes.update($(".doc"))
+			dp.sizes.update($(".doc"));
+			$(".meta h2 a").attr('href', data.detail.url);
+			$("a[download]").attr('href', data.detail.url);
 		}
-
 		document.dispatchEvent(new CustomEvent('start', { detail: this.doc.contentUri() } ));
 	};
 	console.log("Injected...");

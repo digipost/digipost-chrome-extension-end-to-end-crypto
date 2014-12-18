@@ -7,6 +7,7 @@ s.onload = function() {
 };
 (document.head||document.documentElement).appendChild(s);
 
+var gzipHeader = [0x1F, 0x8B];
 
 
 function download(url) {
@@ -40,16 +41,29 @@ function decrypt(data, contentType) {
 }
 
 function handleDecrypted(decrypted, contentType) {
-	var unzipped = gzip.unzip(decrypted);
+	var data = decompress(decrypted);
 	if (contentType.indexOf('html') > 0) {
-		unzipped = sanitize_html(unzipped);
+		data = sanitize_html(data);
 	}
-	var blobUrl = createBlob(unzipped, contentType);
+	var blobUrl = createBlob(data, contentType);
+
 	document.dispatchEvent(new CustomEvent('decrypted', { detail : { 
 		url: blobUrl, 
 		contentType: contentType 
-	}}));	
+	}}));
 }
+
+function decompress(data) {
+	if (data[0] === gzipHeader[0] && data[1] === gzipHeader[1]) {
+		try {
+			return gzip.unzip(data);
+		} catch(e) {
+			console.log(e);
+		}
+	}
+	return data;
+}
+
 
 function sanitize_html(data) {
 	var bom = [0xef, 0xbb, 0xbf];
@@ -61,12 +75,12 @@ function sanitize_html(data) {
 	return stringToUint8Array(purified);
 }
 
-
 function createBlob(decrypted, contentType) {
 	var blob = new Blob( [ new Uint8Array(decrypted) ], { type: contentType } );
     var urlCreator = window.URL || window.webkitURL;
     return urlCreator.createObjectURL(blob);
 }
+
 function stringToUint8Array(str) {
 	var arr = new Uint8Array(str.length);
 	var j = str.length;
@@ -75,9 +89,6 @@ function stringToUint8Array(str) {
 	}
 	return arr;
 }
-
-
-
 
 function failed(message) {
 	document.dispatchEvent(new CustomEvent('failed', { detail : message } ));	
@@ -97,9 +108,10 @@ function perfLog(fun, context) {
 		return result;
 	}
 }
+
 perfLog(createBlob);
-//perfLog(decrypt);
 perfLog(sanitize_html);
 perfLog(createBlob);
-perfLog(gzip.unzip, gzip);
+perfLog(decompress);
+
 
