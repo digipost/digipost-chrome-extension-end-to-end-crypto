@@ -59,7 +59,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 		return sendResponse({ hasKey : privateKey !== null });
 	}
 	if (request.message === 'decrypt') {
-		return sendResponse({ data: decrypt(forge.util.binary.base64.decode(request.data)) })
+		return sendResponse(decryptData(request.data));
 	}
 	if (request.message === 'blob') {
 		return sendResponse({ url: createBlob(request.data, request.contentType) });
@@ -72,16 +72,24 @@ function createBlob(decrypted, contentType) {
     return urlCreator.createObjectURL(blob);
 }
 
-function decrypt(response) {
-	try {
-		var buffer = forge.util.createBuffer(response);
-		var asn1 = forge.asn1.fromDer(buffer);
-		var message = forge.pkcs7.messageFromAsn1(asn1);
-		message.decrypt(message.recipients[0], privateKey);
-		return message.content.data;
-	} catch(e) { 
-		console.log(e); 
+function decryptData(data) {
+	if (privateKey !== null) {
+		try {
+			return { data: decrypt(forge.util.binary.base64.decode(data)) };
+		} catch(e) { 
+			return { error: 'Kan ikke dekryptere med den angitte nøkkelen. Feil i data eller feil nøkkel' };
+		}
+	} else {
+		return { error: 'Privatnøkkel ikke lagt til. Trykk på Digipost-ikonet i adressebaren for å legge til' }; 
 	}
+}
+
+function decrypt(response) {
+	var buffer = forge.util.createBuffer(response);
+	var asn1 = forge.asn1.fromDer(buffer);
+	var message = forge.pkcs7.messageFromAsn1(asn1);
+	message.decrypt(message.recipients[0], privateKey);
+	return message.content.data;
 }
 
 

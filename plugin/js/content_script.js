@@ -36,6 +36,9 @@ function decrypt(data, contentType) {
 		data: forge.util.binary.base64.encode(new Uint8Array(data)) 
 	}, function(response) {
 		console.timeEnd("Decrypt");
+		if (response.error) {
+			return emit('decryption-failed', { error: response.error });
+		}
 		handleDecrypted(stringToUint8Array(response.data), contentType);
 	});
 }
@@ -47,11 +50,16 @@ function handleDecrypted(decrypted, contentType) {
 	}
 	var blobUrl = createBlob(data, contentType);
 
-	document.dispatchEvent(new CustomEvent('decrypted', { detail : { 
+	emit('decrypted', { 
 		url: blobUrl, 
 		contentType: contentType 
-	}}));
+	});
 }
+
+function emit(event, data) {
+	document.dispatchEvent(new CustomEvent(event, { detail : data }));	
+}
+
 
 function decompress(data) {
 	if (data[0] === gzipHeader[0] && data[1] === gzipHeader[1]) {
