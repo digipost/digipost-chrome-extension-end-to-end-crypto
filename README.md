@@ -3,6 +3,8 @@ Digipost Chrome plugin for ende-til-ende-kryptering
 
 Digipost Chrome plugin for ende-til-ende-kryptering er en plugin til Chrome som en del av ende-til-ende-kryptering i Digipost. Bruker oppretter (eller har opprettet) et par krypteringsnøkler. Den offentlige nøkkelen lastes opp til Digipost og benyttes for kryptering fra avsender. Den private beholder bruker selv, og kan benytte denne plugin for å dekryptere dokumenter i nettleseren. Privatnøkkelen vil med denne plugin kun forbli på brukers maskin og vil aldri bli utvekslet med Digipost eller andre.
 
+Det er valgfritt å benytte denne plugin, dersom man ønsker å benytte ende-til-ende-kryptering i Digipost.
+
 Filer
 -----
 * **background.js** - Sørger for at plugin trigger.
