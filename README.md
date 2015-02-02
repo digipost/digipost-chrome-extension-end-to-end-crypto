@@ -1,18 +1,19 @@
-Digipost Chrome Plugin for ende-til-ende-kryptering
+Digipost Chrome plugin for ende-til-ende-kryptering
 ---------------------------------------------------
 
+Digipost Chrome plugin for ende-til-ende-kryptering er en plugin til Chrome som en del av ende-til-ende-kryptering i Digipost. Bruker oppretter (eller har opprettet) et par krypteringsnøkler. Den offentlige nøkkelen lastes opp til Digipost og benyttes for kryptering fra avsender. Den private beholder bruker selv, og kan benytte denne plugin for å dekryptere dokumenter i nettleseren. Privatnøkkelen vil med denne plugin kun forbli på brukers maskin og vil aldri bli utvekslet med Digipost eller andre.
 
 Filer
 -----
-* **background.js** - Sørger for at plugin trigger
-* **content_script.js** - kjøres når siden lastes. Gjør dekryptering og unzipping
-* **override.js** - overrider metoder i Digipost for å vist brev (sender til content_script.js for dekryptering først)
+* **background.js** - Sørger for at plugin trigger.
+* **content_script.js** - kjøres når siden lastes. Gjør dekryptering og unzipping.
+* **override.js** - overrider metoder i Digipost for å vise dokumenter (sender til content_script.js for dekryptering først).
 
 
 Biblioteker
 -----------
-* **gzip.js** - node modul - Kjørt gjennom browserify og endret for å legge til gzip på window
-* **forge.bundle.js** - node-forge patchet med https://github.com/digitalbazaar/forge/pull/201 og bygget med npm run minify
+* **gzip.js** - node modul - Kjørt gjennom browserify og endret for å legge til gzip på window.
+* **forge.bundle.js** - node-forge patchet med https://github.com/digitalbazaar/forge/pull/201 og bygget med npm run minify.
 
 Lisens
 ------
