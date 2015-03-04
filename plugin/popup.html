@@ -61,6 +61,14 @@ h3 {
 	margin-bottom: 1em;
 }
 
+.error {
+    color: #e32d22;
+}
+
+.hidden {
+    display:none;
+}
+
 </style>
 </head>
 <body>
@@ -72,6 +80,7 @@ h3 {
 	<div id="needsKey" style="display: none">
 		Lim inn base64-encodet private key:
 		<textarea id="keydata"></textarea>
+        <div class="error hidden"></div>
 		<button id="setKeyButton">Legg inn</button>
 	</div>
 </body>

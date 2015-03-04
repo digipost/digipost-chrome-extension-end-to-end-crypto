@@ -53,7 +53,13 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 		return sendResponse({ hasKey : false });
 	}
 	if (request.message === 'setKey') {
-		setKey(request.data);
+    try {
+      setKey(request.data);
+    } catch (e) {
+      console.error('Klarte ikke å parse nøkkel', e);
+      sendResponse({ hasKey: false, error: 'Klarte ikke å laste inn nøkkel' });
+    }
+
 		return sendResponse({ hasKey : privateKey !== null });
 	}
 	if (request.message === 'decrypt') {
