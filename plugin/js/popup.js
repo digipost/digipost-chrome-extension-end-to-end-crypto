@@ -20,7 +20,7 @@ function toggle(hasKey) {
 
 function sendMessage(message, data) {
 	console.log('sender', message);
-	chrome.extension.sendRequest({ to: 'background', message: message, data: data }, function(response) {
+	chrome.runtime.sendMessage({ to: 'background', message: message, data: data }, function(response) {
 		console.log('message', response);
 		toggle(response.hasKey)
 	});
