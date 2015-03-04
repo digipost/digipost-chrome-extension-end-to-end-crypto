@@ -1,8 +1,8 @@
-console.log("Injecting...");
+console.log("Overriding Digipost JavaScript functions");
 
 if (dp.url) {
 	dp.url.real_normalize = dp.url.normalize;
-	dp.url.normalize = function(url) { 
+	dp.url.normalize = function(url) {
 		if (url.indexOf("blob:") === 0) {
 			return url;
 		}
@@ -26,7 +26,7 @@ if (dp.views.content) {
 		dp.spinner.show();
 		document.addEventListener('decrypted', process);
 		document.addEventListener('decryption-failed', failed);
-		
+
 		function process(data){
 			dp.spinner.hide();
 			document.removeEventListener('decrypted', process);
@@ -48,4 +48,3 @@ if (dp.views.content) {
 	};
 	console.log("Injected...");
 }
-
