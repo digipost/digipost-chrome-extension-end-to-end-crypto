@@ -54,8 +54,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 		return sendResponse({ hasKey : false });
 	}
 	if (request.message === 'setKey') {
-		var asn1pk = forge.asn1.fromDer(forge.util.decode64(request.data));
-		privateKey = forge.pki.privateKeyFromAsn1(asn1pk);
+		setKey(request.data);
 		return sendResponse({ hasKey : privateKey !== null });
 	}
 	if (request.message === 'decrypt') {
@@ -92,4 +91,16 @@ function decrypt(response) {
 	return message.content.data;
 }
 
+function setKey(key) {
+	var base64Key = stripOpenSSLBoundaries(key);
 
+	var asn1pk = forge.asn1.fromDer(forge.util.decode64(base64Key));
+	privateKey = forge.pki.privateKeyFromAsn1(asn1pk);
+}
+
+function stripOpenSSLBoundaries(key) {
+	return key
+			.replace(/\-{5}BEGIN RSA PRIVATE KEY\-{5}/g, '')
+			.replace(/\-{5}END RSA PRIVATE KEY\-{5}/g, '')
+			.replace(/\n/g, '');
+}
