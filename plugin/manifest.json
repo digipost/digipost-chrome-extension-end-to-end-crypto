@@ -8,7 +8,6 @@
   	"48":"icons/app48.png",
   	"128":"icons/app128.png"
   },
-  "author" : "Erlend Oftedal",
 
   "permissions": [
   	"https://www.digipost.no/*", "https://www.digipostdata.no/*", "https://localhost:9090/*",
