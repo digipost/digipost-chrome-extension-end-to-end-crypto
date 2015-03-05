@@ -22,7 +22,9 @@ window.dp = window.dp || {};
       try {
         return { data: decrypt(forge.util.binary.base64.decode(data)) };
       } catch(e) {
-        return { error: 'Kan ikke dekryptere med den angitte nøkkelen. Feil i data eller feil nøkkel' };
+        return { error: '<p>Klarte ikke dekryptere brevet med nøkkelen. Det kan skyldes at det er feil i datene fra avsender eller at du bruker feil nøkkel. ' +
+        'Sjekk at du bruker privatnøkkel tilsvarende den offentlige nøkkelen du har lastet opp i Digipost.</p>' +
+        '<p>Du kan fortsatt laste ned filen kryptert og forsøke å dekryptere den lokalt på din egen maskin.</p>' };
       }
     } else {
       return { error: 'Privatnøkkel ikke lagt til. Trykk på Digipost-ikonet i adressebaren for å legge til' };
