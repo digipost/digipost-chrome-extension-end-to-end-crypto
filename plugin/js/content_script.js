@@ -66,7 +66,7 @@ function decompress(data) {
 		try {
 			return gzip.unzip(data);
 		} catch(e) {
-			console.log(e);
+			console.error("Unzipping av brev feilet", e);
 		}
 	}
 	return data;
