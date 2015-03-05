@@ -1,3 +1,5 @@
+"use strict";
+
 var manifestDetails = chrome.app.getDetails();
 var hosts = manifestDetails.content_scripts[0].matches.map(function(m) {
 	return m.split('//')[1].split('/')[0];
@@ -25,7 +27,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 		return sendResponse({ hasKey : dp.key_storage.hasKey() });
 	}
 	if (request.message === 'removeKey') {
-		privateKey = null;
+    dp.key_storage.removeKey();
 		return sendResponse({ hasKey : false });
 	}
 	if (request.message === 'setKey') {

@@ -13,7 +13,8 @@ window.dp = window.dp || {};
   window.dp.key_storage = {
     setKey: setKey,
     decryptData: decryptData,
-    hasKey: hasKey
+    hasKey: hasKey,
+    removeKey: removeKey
   };
 
   function decryptData(data) {
@@ -37,6 +38,10 @@ window.dp = window.dp || {};
 
   function hasKey() {
     return privateKey !== null;
+  }
+
+  function removeKey() {
+    privateKey = null;
   }
 
 
