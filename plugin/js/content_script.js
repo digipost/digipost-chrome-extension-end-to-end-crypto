@@ -30,7 +30,7 @@ function download(url) {
 
 function decrypt(data, contentType) {
 	console.time("Decrypt");
-	chrome.extension.sendRequest({ 
+	chrome.runtime.sendMessage({
 		to:"background", 
 		message: "decrypt", 
 		data: forge.util.binary.base64.encode(new Uint8Array(data)) 
