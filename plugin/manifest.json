@@ -18,7 +18,8 @@
   ],
   "background" : {
     "scripts" : [ 
-      "js/vendor/forge.bundle.js", 
+      "js/vendor/forge.bundle.js",
+      "js/lib/key_storage.js",
       "js/background.js"
     ]
   },
