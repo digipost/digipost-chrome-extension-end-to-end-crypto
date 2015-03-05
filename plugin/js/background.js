@@ -1,24 +1,5 @@
 "use strict";
 
-var manifestDetails = chrome.app.getDetails();
-var hosts = manifestDetails.content_scripts[0].matches.map(function(m) {
-	return m.split('//')[1].split('/')[0];
-});
-
-chrome.runtime.onInstalled.addListener(function() {
-	console.log('Installert...');
-	try {
-		console.log('Fjerner gamle regler...');
-		chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
-			chrome.declarativeContent.onPageChanged.addRules(generateRules(hosts));
-			console.log('Nye regler lagt til');
-		});
-	} catch(e) {
-		console.log('Kunne ikke legge inn regler', e);
-	}
-});
-
-
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 	if (request.to !== 'background') {
 		return;
@@ -54,17 +35,4 @@ function createBlob(decrypted, contentType) {
     return urlCreator.createObjectURL(blob);
 }
 
-function generateRules(hosts) {
-  return hosts.map(function(hostspecifier) {
-    var parts = hostspecifier.split(':');
-    var matcher = { pageUrl: { hostEquals: parts[0], schemes: ['https'] } };
-    if (parts[1]) matcher.pageUrl.ports = [ parseInt(parts[1], 10) ];
-    console.log('Regel for: ' + hostspecifier);
-    return {
-      conditions: [
-        new chrome.declarativeContent.PageStateMatcher(matcher)
-      ],
-      actions: [ new chrome.declarativeContent.ShowPageAction() ]
-    };
-  });
-}
+
