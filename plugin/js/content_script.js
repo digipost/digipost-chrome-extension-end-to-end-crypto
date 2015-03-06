@@ -99,7 +99,7 @@ function stringToUint8Array(str) {
 }
 
 function failed(message) {
-	document.dispatchEvent(new CustomEvent('failed', { detail : message } ));	
+	document.dispatchEvent(new CustomEvent('failed', { detail : message } ));
 }
 
 document.addEventListener('start', function(e, x){
