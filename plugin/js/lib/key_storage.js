@@ -19,19 +19,21 @@ window.dp = window.dp || {};
     removeKey: removeKey
   };
 
-  function decryptData(data) {
-    if (privateKey !== null) {
-      try {
-        return { data: decrypt(forge.util.binary.base64.decode(data)) };
-      } catch(e) {
-        return { error: '<p>Klarte ikke dekryptere brevet med nøkkelen. Det kan skyldes at det er feil i datene fra avsender eller at du bruker feil nøkkel. ' +
-        'Sjekk at du bruker privatnøkkel tilsvarende den offentlige nøkkelen du har lastet opp i Digipost.</p>' +
-        '<p>Du kan fortsatt laste ned filen kryptert og forsøke å dekryptere den lokalt på din egen maskin.</p>' };
-      }
-    } else {
-      return { error: 'Privatnøkkel ikke lagt til. Trykk på Digipost-ikonet i adressebaren for å legge til' };
-    }
-  }
+	function decryptData(data) {
+		if (privateKey === null) {
+			return {error: 'Privatnøkkel ikke lagt til. Trykk på Digipost-ikonet i adressebaren for å legge til'};
+		}
+
+		try {
+			return {data: decrypt(forge.util.binary.base64.decode(data))};
+		} catch (e) {
+			return {
+				error: '<p>Klarte ikke dekryptere brevet med nøkkelen. Det kan skyldes at det er feil i datene fra avsender eller at du bruker feil nøkkel. ' +
+				'Sjekk at du bruker privatnøkkel tilsvarende den offentlige nøkkelen du har lastet opp i Digipost.</p>' +
+				'<p>Du kan fortsatt laste ned filen kryptert og forsøke å dekryptere den lokalt på din egen maskin.</p>'
+			};
+		}
+	}
 
   function setKey(key) {
     var base64Key = stripOpenSSLBoundaries(key);
@@ -49,8 +51,8 @@ window.dp = window.dp || {};
   }
 
 
-  function decrypt(response) {
-    var buffer = forge.util.createBuffer(response);
+	function decrypt(encryptedMessage) {
+		var buffer = forge.util.createBuffer(encryptedMessage);
     var asn1 = forge.asn1.fromDer(buffer);
     var message = forge.pkcs7.messageFromAsn1(asn1);
     message.decrypt(message.recipients[0], privateKey);
