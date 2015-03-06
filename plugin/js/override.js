@@ -26,6 +26,11 @@ console.log("Overriding Digipost JavaScript functions");
   if (dp.views.content) {
     dp.views.content.init_original = dp.views.content.init;
     dp.views.content.init = function() {
+      if (!this.doc.data.userKeyEncrypted) {
+        // Don't try to decrypt contents if original is not encrypted with user key. Apply original content view.
+        return dp.views.content.init_original.apply(this, arguments);
+      }
+
       var view = this;
       dp.spinner.show();
       document.addEventListener('decrypted', show);
