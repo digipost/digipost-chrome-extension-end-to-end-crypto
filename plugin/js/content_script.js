@@ -105,21 +105,3 @@ function failed(message) {
 document.addEventListener('start', function(e, x){
 	download(e.detail);
 });
-
-function perfLog(fun, context) {
-	var context = context || this;
-	var realFun = context[fun.name];
-	context[fun.name] = function() {
-		console.time(fun.name);
-		var result = realFun.apply(context, arguments);
-		console.timeEnd(fun.name);
-		return result;
-	}
-}
-
-perfLog(createBlob);
-perfLog(sanitize_html);
-perfLog(createBlob);
-perfLog(decompress);
-
-
