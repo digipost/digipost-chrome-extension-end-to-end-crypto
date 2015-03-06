@@ -1,2 +1,4 @@
 .DS_Store
-.idea
+#Ignore all idea settings, except code styles
+.idea/*
+!.idea/codeStyleSettings.xml
