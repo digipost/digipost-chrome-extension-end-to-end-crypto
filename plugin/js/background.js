@@ -24,15 +24,5 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 	if (request.message === 'decrypt') {
 		return sendResponse(dp.key_storage.decryptData(request.data));
 	}
-	if (request.message === 'blob') {
-		return sendResponse({ url: createBlob(request.data, request.contentType) });
-	}
 });
-
-function createBlob(decrypted, contentType) {
-	var blob = new Blob( [ new Uint8Array(decrypted) ], { type: contentType } );
-    var urlCreator = window.URL || window.webkitURL;
-    return urlCreator.createObjectURL(blob);
-}
-
 
