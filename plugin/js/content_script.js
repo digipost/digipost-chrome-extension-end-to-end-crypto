@@ -86,8 +86,7 @@ function sanitize_html(data) {
 
 function createBlob(decrypted, contentType) {
 	var blob = new Blob( [ new Uint8Array(decrypted) ], { type: contentType } );
-    var urlCreator = window.URL || window.webkitURL;
-    return urlCreator.createObjectURL(blob);
+	return (window.URL || window.webkitURL).createObjectURL(blob);
 }
 
 function stringToUint8Array(str) {
