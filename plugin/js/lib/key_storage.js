@@ -51,8 +51,8 @@ window.dp = window.dp || {};
   }
 
 
-	function decrypt(encryptedMessage) {
-		var buffer = forge.util.createBuffer(encryptedMessage);
+  function decrypt(encryptedMessage) {
+    var buffer = forge.util.createBuffer(encryptedMessage);
     var asn1 = forge.asn1.fromDer(buffer);
     var message = forge.pkcs7.messageFromAsn1(asn1);
     message.decrypt(message.recipients[0], privateKey);
