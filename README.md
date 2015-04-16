@@ -5,6 +5,8 @@ Digipost Chrome extension for ende-til-ende-kryptering er en utvidelse til Chrom
 
 Utvidelsen er open source, og teknisk kyndige brukere oppfordres til å lese gjennom kildekoden for å forsikre seg at privatnøkkelen håndteres riktig. Dersom en bruker av en eller annen grunn ikke ønsker å bruke utvidelsen, er det fullt mulig å laste ned de krypterte dokumentene og dekryptere lokalt.
 
+Siden utvidelser til Google Chrome ikke har tilgang på sikker lagring vil den private nøkkelen lagres i minnet, og forsvinne dersom nettleseren lukkes.
+
 Filer
 -----
 * **background.js** - Sørger for at extension trigger.
