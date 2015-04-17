@@ -75,7 +75,7 @@
 		if (dp.embed) {
 			dp.embed.real_html = dp.embed.html;
 			dp.embed.html = function (options) {
-				var options = options || {};
+				options = options || {};
 				options.sandbox = '';
 				return dp.embed.real_html(options);
 			}
