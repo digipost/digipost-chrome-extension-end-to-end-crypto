@@ -12,9 +12,10 @@
 
 
 function download(url) {
-	document.removeEventListener('processEncryptedDocument', download);
 	console.debug("Downloading document from server into javascript client memory for decryption.");
 	console.time("Download");
+	emit('downloading');
+
 	var xhr = new XMLHttpRequest();
 
 	// We want to buffer the entire response in an array for further processing (decryption)
@@ -28,11 +29,7 @@ function download(url) {
 			}
 			var contentType = xhr.getResponseHeader('content-type');
 
-			// Trigger decryption of the downloaded document
-			emit('downloaded', {
-				data: xhr.response,
-				contentType: contentType
-			});
+			decrypt(xhr.response, contentType);
 		}
 	};
 	xhr.open("GET", url, true);
@@ -40,8 +37,8 @@ function download(url) {
 }
 
 function decrypt(data, contentType) {
-	document.removeEventListener('decrypt', decrypt);
 	console.time("Decrypt");
+	emit('decrypting');
 
 	// Delegate decryption to the background context which has access to the private key
 	chrome.runtime.sendMessage({
@@ -72,13 +69,6 @@ function handleDecrypted(data, contentType) {
 		url: blobUrl, 
 		contentType: contentType 
 	});
-}
-
-/**
- * Dispatches an event to the override script
- */
-function emit(event, data) {
-	document.dispatchEvent(new CustomEvent(event, { detail : data }));	
 }
 
 function sanitize_html(data) {
@@ -117,6 +107,10 @@ document.addEventListener('processEncryptedDocument', function(e, x){
 	download(e.detail.contentUri);
 });
 
-document.addEventListener('decrypt', function(e){
-	decrypt(e.detail.data, e.detail.contentType);
-});
+
+/**
+ * Dispatches an event to the override script
+ */
+function emit(event, data) {
+	document.dispatchEvent(new CustomEvent(event, { detail : data }));
+}

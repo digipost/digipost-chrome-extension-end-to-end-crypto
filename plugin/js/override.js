@@ -11,26 +11,31 @@
 
 	overrideDigipostJavascriptFunctions();
 
-	document.addEventListener('downloaded', showDecryptionSpinner);
+	document.addEventListener('downloading', showDownloadSpinner);
+	document.addEventListener('decrypting', showDecryptionSpinner);
+	document.addEventListener('decrypted', hideSpinner);
 	document.addEventListener('decrypted', showDecryptedDocument);
+	document.addEventListener('decryption-failed', hideSpinner);
 	document.addEventListener('decryption-failed', showEncryptionFailedError);
 
-	function showDecryptionSpinner(e) {
-		dp.spinner.hide();
+	function showDecryptionSpinner() {
+		hideSpinner();
 		dp.spinner.show({ label: 'Dekrypterer dokument…' });
-		document.dispatchEvent(new CustomEvent('decrypt', {
-			detail: {
-				data: e.detail.data,
-				contentType: e.detail.contentType
-			}
-		}));
+	}
+
+	function showDownloadSpinner() {
+		hideSpinner();
+		dp.spinner.show({label: 'Laster ned dokument…'});
+	}
+
+	function hideSpinner() {
+		dp.spinner.hide();
 	}
 
 	/**
 	 * Show data as decrypted by the content script
 	 */
 	function showDecryptedDocument(data){
-		dp.spinner.hide();
 		activeContentView.doc.contentUri = function() {
 			return data.detail.url;
 		};
@@ -41,9 +46,8 @@
 		$("a[download]").attr('href', data.detail.url);
 	}
 
-	function showEncryptionFailedError(data) {
-		dp.spinner.hide();
-		dp.modal.show(data.detail.error);
+	function showEncryptionFailedError(e) {
+		dp.modal.show(e.detail.error);
 	}
 
 	/**
@@ -89,17 +93,18 @@
 					return dp.views.content.init_original.apply(this, arguments);
 				}
 				activeContentView = this;
-				dp.spinner.show({label: 'Laster ned dokument…'});
+
 				// Trigger the content script to start processing the encrypted document.
-				document.dispatchEvent(new CustomEvent('processEncryptedDocument', {
-					detail: {
-						contentUri: this.doc.contentUri()
-					}
-				}));
+				emit("processEncryptedDocument", { contentUri: this.doc.contentUri() });
 			};
 		}
 	}
 
-
+	/**
+	 * Dispatches an event to the content script
+	 */
+	function emit(event, data) {
+		document.dispatchEvent(new CustomEvent(event, { detail : data }));
+	}
 
 })();
