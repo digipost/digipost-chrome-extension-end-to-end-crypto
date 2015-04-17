@@ -12,6 +12,7 @@
 
 
 function download(url) {
+	document.removeEventListener('processEncryptedDocument', download);
 	console.debug("Downloading document from server into javascript client memory for decryption.");
 	console.time("Download");
 	var xhr = new XMLHttpRequest();
@@ -28,7 +29,10 @@ function download(url) {
 			var contentType = xhr.getResponseHeader('content-type');
 
 			// Trigger decryption of the downloaded document
-			decrypt(xhr.response, contentType);
+			emit('downloaded', {
+				data: xhr.response,
+				contentType: contentType
+			});
 		}
 	};
 	xhr.open("GET", url, true);
@@ -36,6 +40,7 @@ function download(url) {
 }
 
 function decrypt(data, contentType) {
+	document.removeEventListener('decrypt', decrypt);
 	console.time("Decrypt");
 
 	// Delegate decryption to the background context which has access to the private key
@@ -110,4 +115,8 @@ function failed(message) {
 
 document.addEventListener('processEncryptedDocument', function(e, x){
 	download(e.detail.contentUri);
+});
+
+document.addEventListener('decrypt', function(e){
+	decrypt(e.detail.data, e.detail.contentType);
 });

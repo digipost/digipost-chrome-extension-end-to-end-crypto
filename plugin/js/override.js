@@ -38,7 +38,8 @@ console.log("Overriding Digipost JavaScript functions");
       }
 
       var view = this;
-      dp.spinner.show();
+      dp.spinner.show({ label: 'Laster ned dokument…' });
+      document.addEventListener('downloaded', decrypt);
       document.addEventListener('decrypted', show);
       document.addEventListener('decryption-failed', failed);
 
@@ -48,6 +49,18 @@ console.log("Overriding Digipost JavaScript functions");
 						contentUri: this.doc.contentUri()
 					}
 			}));
+
+      function decrypt(e) {
+        document.removeEventListener('downloaded', decrypt);
+        dp.spinner.hide();
+        dp.spinner.show({ label: 'Dekrypterer dokument…' });
+        document.dispatchEvent(new CustomEvent('decrypt', {
+          detail: {
+            data: e.detail.data,
+            contentType: e.detail.contentType
+          }
+        }));
+      }
 
 			/**
 			 * Show data as decrypted by the content script
