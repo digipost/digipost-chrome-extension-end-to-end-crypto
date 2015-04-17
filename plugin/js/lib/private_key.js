@@ -8,7 +8,7 @@ window.dp = window.dp || {};
    */
   var privateKey = null;
 
-  window.dp.key_storage = {
+  window.dp.private_key = {
     setKey: setKey,
     decryptData: decryptData,
     hasKey: hasKey,

@@ -5,24 +5,24 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 		return;
 	}
 	if (request.message === 'hasKey?') {
-		return sendResponse({ hasKey : dp.key_storage.hasKey() });
+		return sendResponse({ hasKey : dp.private_key.hasKey() });
 	}
 	if (request.message === 'removeKey') {
-    dp.key_storage.removeKey();
+    dp.private_key.removeKey();
 		return sendResponse({ hasKey : false });
 	}
 	if (request.message === 'setKey') {
     try {
-      dp.key_storage.setKey(request.data);
+      dp.private_key.setKey(request.data);
     } catch (e) {
       console.error('Klarte ikke å parse nøkkel', e);
       sendResponse({ hasKey: false, error: 'Klarte ikke å laste inn nøkkel' });
     }
 
-		return sendResponse({ hasKey : dp.key_storage.hasKey() });
+		return sendResponse({ hasKey : dp.private_key.hasKey() });
 	}
 	if (request.message === 'decrypt') {
-		var decryptedData = dp.key_storage.decryptData(request.data);
+		var decryptedData = dp.private_key.decryptData(request.data);
 		return sendResponse(decryptedData);
 	}
 });

@@ -20,7 +20,7 @@
     "scripts" : [ 
       "js/lib/declarative_contents.js",
       "js/vendor/forge.bundle.js",
-      "js/lib/key_storage.js",
+      "js/lib/private_key.js",
       "js/background.js"
     ]
   },
