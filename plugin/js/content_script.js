@@ -10,8 +10,6 @@
 	(document.head || document.documentElement).appendChild(s);
 })();
 
-var gzipHeader = [0x1F, 0x8B];
-
 
 function download(url) {
 	console.time("Download");
@@ -46,8 +44,7 @@ function decrypt(data, contentType) {
 	});
 }
 
-function handleDecrypted(decrypted, contentType) {
-	var data = decompress(decrypted);
+function handleDecrypted(data, contentType) {
 	if (contentType.indexOf('html') > 0) {
 		data = sanitize_html(data);
 	}
@@ -62,19 +59,6 @@ function handleDecrypted(decrypted, contentType) {
 function emit(event, data) {
 	document.dispatchEvent(new CustomEvent(event, { detail : data }));	
 }
-
-
-function decompress(data) {
-	if (data[0] === gzipHeader[0] && data[1] === gzipHeader[1]) {
-		try {
-			return gzip.unzip(data);
-		} catch(e) {
-			console.error("Unzipping av brev feilet", e);
-		}
-	}
-	return data;
-}
-
 
 function sanitize_html(data) {
 	var bom = [0xef, 0xbb, 0xbf];
