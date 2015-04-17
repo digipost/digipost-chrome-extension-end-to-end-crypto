@@ -9,9 +9,11 @@ Siden utvidelser til Google Chrome ikke har tilgang på sikker lagring vil den p
 
 Filer
 -----
-* **background.js** - Sørger for at extension trigger.
-* **content_script.js** - kjøres når siden lastes. Gjør dekryptering og unzipping.
-* **override.js** - overrider metoder i Digipost for å vise dokumenter (sender til content_script.js for dekryptering først).
+* **background.js** - Tar i mot meldinger for operasjoner som skal kjøres i bakgrunnen, typisk dekryptering.
+* **private_key.js** - Holder på brukerens private nøkkel og gjør dekryptering av dokumenter.
+* **content_script.js** - Kjøres når det lastes sider på digipost.no. Injiserer `override.js`. Delegerer dekryptering `background.js`.
+* **override.js** - Overskriver JavaScript-metoder i Digipost for å vise krypterte dokumenter. Delegerer nedlasting og dekryptering til `content_script.js`.
+* **popup.js** - Logikk for dialogboksen som tar i mot brukerens private nøkkel.
 
 Biblioteker
 -----------
