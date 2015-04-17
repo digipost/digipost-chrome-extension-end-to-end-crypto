@@ -2,12 +2,12 @@
 
 (function loadOverrideScript() {
 	console.debug("Loading override script into the Digipost DOM. This allows it to hook into Digiposts frontend display logic.");
-	var s = document.createElement('script');
-	s.src = chrome.extension.getURL('js/override.js');
-	s.onload = function () {
+	var overrideScript = document.createElement('script');
+	overrideScript.src = chrome.extension.getURL('js/override.js');
+	overrideScript.onload = function () {
 		this.parentNode.removeChild(this);
 	};
-	(document.head || document.documentElement).appendChild(s);
+	(document.head || document.documentElement).appendChild(overrideScript);
 })();
 
 
