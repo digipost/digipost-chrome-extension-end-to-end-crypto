@@ -1,12 +1,14 @@
 "use strict";
-console.log("Loading content script...");
 
-var s = document.createElement('script');
-s.src = chrome.extension.getURL('js/override.js');
-s.onload = function() {
-    this.parentNode.removeChild(this);
-};
-(document.head||document.documentElement).appendChild(s);
+(function loadOverrideScript() {
+	console.debug("Loading override script into the Digipost DOM. This allows it to hook into Digiposts frontend display logic.");
+	var s = document.createElement('script');
+	s.src = chrome.extension.getURL('js/override.js');
+	s.onload = function () {
+		this.parentNode.removeChild(this);
+	};
+	(document.head || document.documentElement).appendChild(s);
+})();
 
 var gzipHeader = [0x1F, 0x8B];
 
