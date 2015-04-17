@@ -1,8 +1,8 @@
-(function() {
+(function () {
 
-  "use strict";
+	"use strict";
 
-	console.log("Overriding Digipost JavaScript functions");
+	console.log('Overriding Digipost JavaScript functions');
 
 	/**
 	 * View where we will show the document once decryption is done.
@@ -20,7 +20,7 @@
 
 	function showDecryptionSpinner() {
 		hideSpinner();
-		dp.spinner.show({ label: 'Dekrypterer dokument…' });
+		dp.spinner.show({label: 'Dekrypterer dokument…'});
 	}
 
 	function showDownloadSpinner() {
@@ -35,15 +35,15 @@
 	/**
 	 * Show data as decrypted by the content script
 	 */
-	function showDecryptedDocument(data){
-		activeContentView.doc.contentUri = function() {
+	function showDecryptedDocument(data) {
+		activeContentView.doc.contentUri = function () {
 			return data.detail.url;
 		};
 		activeContentView.imageUrl = activeContentView.doc.contentUri;
 		dp.views.content.init_original.apply(activeContentView);
-		dp.sizes.update($(".doc"));
-		$(".meta h2 a").attr('href', data.detail.url);
-		$("a[download]").attr('href', data.detail.url);
+		dp.sizes.update($('.doc'));
+		$('.meta h2 a').attr('href', data.detail.url);
+		$('a[download]').attr('href', data.detail.url);
 	}
 
 	function showEncryptionFailedError(e) {
@@ -60,7 +60,7 @@
 		if (dp.url) {
 			dp.url.real_normalize = dp.url.normalize;
 			dp.url.normalize = function (url) {
-				if (url.indexOf("blob:") === 0) {
+				if (url.indexOf('blob:') === 0) {
 					return url;
 				}
 				return dp.url.real_normalize(url);
@@ -95,7 +95,7 @@
 				activeContentView = this;
 
 				// Trigger the content script to start processing the encrypted document.
-				emit("processEncryptedDocument", { contentUri: this.doc.contentUri() });
+				emit('processEncryptedDocument', {contentUri: this.doc.contentUri()});
 			};
 		}
 	}
@@ -104,7 +104,7 @@
 	 * Dispatches an event to the content script
 	 */
 	function emit(event, data) {
-		document.dispatchEvent(new CustomEvent(event, { detail : data }));
+		document.dispatchEvent(new CustomEvent(event, {detail: data}));
 	}
 
 })();

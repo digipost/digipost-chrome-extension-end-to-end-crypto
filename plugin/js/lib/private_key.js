@@ -1,23 +1,23 @@
 window.dp = window.dp || {};
-(function() {
+(function () {
 
-  "use strict";
+	"use strict";
 
-  /**
-   * The user submitted private key. Stored in a var within an anonymous block to avoid global availability.
-   */
-  var privateKey = null;
+	/**
+	 * The user submitted private key. Stored in a var within an anonymous block to avoid global availability.
+	 */
+	var privateKey = null;
 
-  window.dp.private_key = {
-    setKey: setKey,
-    decryptData: decryptData,
-    hasKey: hasKey,
-    removeKey: removeKey
-  };
+	window.dp.private_key = {
+		setKey: setKey,
+		decryptData: decryptData,
+		hasKey: hasKey,
+		removeKey: removeKey
+	};
 
-  /**
-   * Decrypt a Base64 encoded DER ASN.1 decoded CMS message.
-   */
+	/**
+	 * Decrypt a Base64 encoded DER ASN.1 decoded CMS message.
+	 */
 	function decryptData(data) {
 		if (privateKey === null) {
 			return {error: 'Privatnøkkel ikke lagt til. Trykk på Digipost-ikonet i adressebaren for å legge til'};
@@ -35,38 +35,38 @@ window.dp = window.dp || {};
 		}
 	}
 
-  function setKey(key) {
-    var base64Key = stripOpenSSLBoundaries(key);
+	function setKey(key) {
+		var base64Key = stripOpenSSLBoundaries(key);
 
-    var asn1pk = forge.asn1.fromDer(forge.util.decode64(base64Key), true);
-    privateKey = forge.pki.privateKeyFromAsn1(asn1pk);
-  }
+		var asn1pk = forge.asn1.fromDer(forge.util.decode64(base64Key), true);
+		privateKey = forge.pki.privateKeyFromAsn1(asn1pk);
+	}
 
-  function hasKey() {
-    return privateKey !== null;
-  }
+	function hasKey() {
+		return privateKey !== null;
+	}
 
-  function removeKey() {
-    privateKey = null;
-  }
+	function removeKey() {
+		privateKey = null;
+	}
 
 
 	function decrypt(encryptedMessage) {
 		var buffer = forge.util.createBuffer(encryptedMessage);
-    var asn1 = forge.asn1.fromDer(buffer, true);
-    var message = forge.pkcs7.messageFromAsn1(asn1);
-    message.decrypt(message.recipients[0], privateKey);
-    return message.content.data;
-  }
+		var asn1 = forge.asn1.fromDer(buffer, true);
+		var message = forge.pkcs7.messageFromAsn1(asn1);
+		message.decrypt(message.recipients[0], privateKey);
+		return message.content.data;
+	}
 
-  /**
-   * Removes boundaries and new lines typically used by OpenSSL when displaying keys.
-   */
-  function stripOpenSSLBoundaries(key) {
-    return key
-        .replace(/\-{5}BEGIN RSA PRIVATE KEY\-{5}/g, '')
-        .replace(/\-{5}END RSA PRIVATE KEY\-{5}/g, '')
-        .replace(/\n/g, '');
-  }
+	/**
+	 * Removes boundaries and new lines typically used by OpenSSL when displaying keys.
+	 */
+	function stripOpenSSLBoundaries(key) {
+		return key
+			.replace(/\-{5}BEGIN RSA PRIVATE KEY\-{5}/g, '')
+			.replace(/\-{5}END RSA PRIVATE KEY\-{5}/g, '')
+			.replace(/\n/g, '');
+	}
 
 })();

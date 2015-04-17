@@ -4,20 +4,21 @@
   "description": "Dekryptering av meldinger i chrome",
   "version": "0.0.1",
   "icons": {
-  	"16":"icons/app16.png",
-  	"48":"icons/app48.png",
-  	"128":"icons/app128.png"
+    "16": "icons/app16.png",
+    "48": "icons/app48.png",
+    "128": "icons/app128.png"
   },
-
   "permissions": [
-  	"https://www.digipost.no/*", "https://www.digipostdata.no/*", "https://localhost:9090/*",
-  	"webRequest",
-  	"tabs",
+    "https://www.digipost.no/*",
+    "https://www.digipostdata.no/*",
+    "https://localhost:9090/*",
+    "webRequest",
+    "tabs",
     "declarativeContent",
     "activeTab"
   ],
-  "background" : {
-    "scripts" : [ 
+  "background": {
+    "scripts": [
       "js/lib/declarative_contents.js",
       "js/vendor/forge.bundle.js",
       "js/lib/private_key.js",
@@ -25,27 +26,26 @@
     ]
   },
   "page_action": {
-    "default_icon" : "icons/app48.png",
-    "default_name" : "Digipost",
+    "default_icon": "icons/app48.png",
+    "default_name": "Digipost",
     "default_popup": "popup.html"
   },
   "content_scripts": [
-    { 
-      "js" : [ 
-        "js/vendor/forge.bundle.js", 
+    {
+      "js": [
+        "js/vendor/forge.bundle.js",
         "js/vendor/purify.js",
-        "js/content_script.js" 
-      ], 
-      "run_at" : "document_end", 
-      "matches" : [ 
-        "https://localhost:9090/*", 
-        "https://www.digipost.no/*" 
-      ] 
+        "js/content_script.js"
+      ],
+      "run_at": "document_end",
+      "matches": [
+        "https://localhost:9090/*",
+        "https://www.digipost.no/*"
+      ]
     }
   ],
-  "web_accessible_resources" : [ 
+  "web_accessible_resources": [
     "js/override.js"
   ],
-  "content_security_policy" : "script-src 'self' 'unsafe-eval' chrome-extension-resource: ; object-src 'self'"
-
+  "content_security_policy": "script-src 'self' 'unsafe-eval' chrome-extension-resource: ; object-src 'self'"
 }
