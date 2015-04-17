@@ -22,7 +22,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 		return sendResponse({ hasKey : dp.key_storage.hasKey() });
 	}
 	if (request.message === 'decrypt') {
-		return sendResponse(dp.key_storage.decryptData(request.data));
+		var decryptedData = dp.key_storage.decryptData(request.data);
+		return sendResponse(decryptedData);
 	}
 });
 

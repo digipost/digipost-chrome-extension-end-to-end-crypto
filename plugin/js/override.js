@@ -6,6 +6,7 @@ console.log("Overriding Digipost JavaScript functions");
 
   if (dp.url) {
     dp.url.real_normalize = dp.url.normalize;
+
     dp.url.normalize = function(url) {
       if (url.indexOf("blob:") === 0) {
         return url;
@@ -25,9 +26,14 @@ console.log("Overriding Digipost JavaScript functions");
 
   if (dp.views.content) {
     dp.views.content.init_original = dp.views.content.init;
+
+		/**
+		 * Trap frontend calls to display contents. If the document is encrypted with a user key,
+		 * dispatch an event to start downloading and decryption.
+		 */
     dp.views.content.init = function() {
       if (!this.doc.data.userKeyEncrypted) {
-        // Don't try to decrypt contents if original is not encrypted with user key. Apply original content view.
+        // Don't try to decrypt contents if original is not encrypted with user key. Call original content view function.
         return dp.views.content.init_original.apply(this, arguments);
       }
 
@@ -35,8 +41,17 @@ console.log("Overriding Digipost JavaScript functions");
       dp.spinner.show();
       document.addEventListener('decrypted', show);
       document.addEventListener('decryption-failed', failed);
-      document.dispatchEvent(new CustomEvent('start', { detail: this.doc.contentUri() } ));
 
+			// Trigger the content script to start processing the encrypted document.
+      document.dispatchEvent(new CustomEvent('processEncryptedDocument', {
+					detail: {
+						contentUri: this.doc.contentUri()
+					}
+			}));
+
+			/**
+			 * Show data as decrypted by the content script
+			 */
       function show(data){
         dp.spinner.hide();
         document.removeEventListener('decrypted', show);

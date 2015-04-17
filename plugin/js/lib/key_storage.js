@@ -15,11 +15,15 @@ window.dp = window.dp || {};
     removeKey: removeKey
   };
 
+  /**
+   * Decrypt a Base64 encoded DER ASN.1 decoded CMS message.
+   */
 	function decryptData(data) {
 		if (privateKey === null) {
 			return {error: 'Privatnøkkel ikke lagt til. Trykk på Digipost-ikonet i adressebaren for å legge til'};
 		}
 
+		console.debug('Decrypting message using private key');
 		try {
 			return {data: decrypt(forge.util.binary.base64.decode(data))};
 		} catch (e) {
@@ -34,7 +38,7 @@ window.dp = window.dp || {};
   function setKey(key) {
     var base64Key = stripOpenSSLBoundaries(key);
 
-    var asn1pk = forge.asn1.fromDer(forge.util.decode64(base64Key));
+    var asn1pk = forge.asn1.fromDer(forge.util.decode64(base64Key), true);
     privateKey = forge.pki.privateKeyFromAsn1(asn1pk);
   }
 
@@ -49,12 +53,15 @@ window.dp = window.dp || {};
 
 	function decrypt(encryptedMessage) {
 		var buffer = forge.util.createBuffer(encryptedMessage);
-    var asn1 = forge.asn1.fromDer(buffer);
+    var asn1 = forge.asn1.fromDer(buffer, true);
     var message = forge.pkcs7.messageFromAsn1(asn1);
     message.decrypt(message.recipients[0], privateKey);
     return message.content.data;
   }
 
+  /**
+   * Removes boundaries and new lines typically used by OpenSSL when displaying keys.
+   */
   function stripOpenSSLBoundaries(key) {
     return key
         .replace(/\-{5}BEGIN RSA PRIVATE KEY\-{5}/g, '')
