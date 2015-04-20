@@ -122,4 +122,4 @@
 		document.dispatchEvent(new CustomEvent(event, {detail: data}));
 	}
 
-});
+})();
