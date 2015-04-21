@@ -98,6 +98,17 @@
 				emit('processEncryptedDocument', {contentUri: this.doc.contentUri()});
 			};
 		}
+
+		/**
+		 * The extension decrypts any encrypted content, and as far as Digipost is concerned no documents will be encrypted as long as the extension is running.
+		 * This is used to indicate that the browser may attempt to render the document in the browser,
+		 * instead of displaying a message telling the user to download the document to his or her computer.
+		 */
+		if (dp.models.doc) {
+			dp.models.doc.contentIsEncrypted = function () {
+				return false;
+			}
+		}
 	}
 
 	/**
