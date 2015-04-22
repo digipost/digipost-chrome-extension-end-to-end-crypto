@@ -52,7 +52,7 @@ function inc(importance) {
 		// Bump version numbers in files with version
 		.pipe(bump({type: importance}))
 		.pipe(gulp.dest('./extension'))
-	 	.pipe(git.commit('Bumped package version for ' + importance))
+	 	.pipe(git.commit('Released new version'))
 	 	.pipe(tag_version())
 		.pipe(git.push('origin', 'master'));
 }
