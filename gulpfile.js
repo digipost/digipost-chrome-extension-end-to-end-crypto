@@ -6,8 +6,7 @@ var zip = require('gulp-zip');
 var clean = require('gulp-clean');
 var git = require('gulp-git');
 var bump = require('gulp-bump');
-
-// Add a task to render the output
+var tag_version = require('gulp-tag-version');
 
 gulp.task('lint', function() {
 	return gulp.src('extension/js/*.js')
@@ -34,7 +33,6 @@ gulp.task('default', taskListing);
 
 
 function inc(importance) {
-
 	return gulp.src(['extension/manifest.json'])
 		// Bump version numbers in files with version
 		.pipe(bump({type: importance}))
@@ -42,5 +40,6 @@ function inc(importance) {
 		// Write it back to filesystem. manifest.json must be written to extension folder,
 		// others are written to root. Sweet.
 		.pipe(gulp.dest('./extension'))
-	 	.pipe(git.commit('Bumped package version for ' + importance));
+	 	.pipe(git.commit('Bumped package version for ' + importance))
+	 	.pipe(tag_version());
 }
