@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 
 var jshint = require('gulp-jshint');
+var stylish = require('jshint-stylish');
 var taskListing = require('gulp-task-listing');
 var zip = require('gulp-zip');
 var clean = require('gulp-clean');
@@ -12,7 +13,7 @@ var yargs = require('yargs');
 gulp.task('lint', function() {
 	return gulp.src('extension/js/*.js')
 		.pipe(jshint())
-		.pipe(jshint.reporter('default'));
+		.pipe(jshint.reporter(stylish));
 });
 
 gulp.task('package', ['clean'], function() {

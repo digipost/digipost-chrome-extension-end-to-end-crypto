@@ -11,6 +11,7 @@
     "gulp-tag-version": "^1.2.1",
     "gulp-task-listing": "^1.0.0",
     "gulp-zip": "^3.0.2",
+    "jshint-stylish": "^1.0.1",
     "yargs": "^3.7.2"
   },
   "scripts": {
