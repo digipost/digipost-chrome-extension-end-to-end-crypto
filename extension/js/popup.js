@@ -32,11 +32,11 @@ window.addEventListener('load', function () {
 
 	function showError(message) {
 		errorField.innerText = message;
-		errorField.classList.remove('hidden')
+		errorField.classList.remove('hidden');
 	}
 
 	function hideError() {
-		errorField.classList.add('hidden')
+		errorField.classList.add('hidden');
 	}
 
 	function sendMessage(message, data) {
@@ -45,7 +45,7 @@ window.addEventListener('load', function () {
 				toggle(false);
 				showError(response.error);
 			}
-			toggle(response.hasKey)
+			toggle(response.hasKey);
 		});
 
 	}
