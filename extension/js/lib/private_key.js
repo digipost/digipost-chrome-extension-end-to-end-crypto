@@ -20,7 +20,8 @@ window.dp = window.dp || {};
 	 */
 	function decryptData(data) {
 		if (privateKey === null) {
-			return {error: 'Privatnøkkel ikke lagt til. Trykk på Digipost-ikonet i adressebaren for å legge til'};
+			return {error: 'Du prøver å åpne et ende-til-ende-kryptert brev, men privatnøkkel er ikke lagt til. ' +
+			'Trykk på Digipost-ikonet i adressebaren for å legge til nøkkelen din, eller last ned brevet og dekrypter det lokalt på din egen maskin.'};
 		}
 
 		console.debug('Decrypting message using private key');

@@ -12,7 +12,7 @@ body {
 	margin: 0;
 }
 div {
-	padding: 0em 1em 1em 1em;
+	padding: 0 1em 1em 1em;
 }
 textarea {
 	width: 98%;
@@ -27,8 +27,7 @@ button {
 	width: auto;
 	zoom: 1;
 	padding: 6px 15px 5px 15px;
-	margin: 0 0px 5px 0;
-	text-shadow: none;
+    text-shadow: none;
 	white-space: nowrap;
 	font-size: 13px;
 	line-height: 1.5;
@@ -42,8 +41,7 @@ button {
 	border-bottom: 2px solid #005eab;
 	border-bottom-color: #900;
 	float: right;
-	margin-top: 0.5em;
-	margin-bottom: 1em;
+    margin: 0.5em 0 1em 0;
 }
 
 h3 {
@@ -53,7 +51,6 @@ h3 {
 	color: #4D4F53;
 	margin: 0;
 	font-weight: normal;
-	font-size: 1em;
 	position: relative;
 	width: auto;
 	height: auto;
@@ -78,7 +75,7 @@ h3 {
 		<button id="removeKeyButton">Fjern nøkkel</button>
 	</div>
 	<div id="needsKey" style="display: none">
-		Lim inn base64-encodet private key:
+		<label for="keydata">Lim inn base64-encodet private key:</label>
 		<textarea id="keydata"></textarea>
         <div class="error hidden"></div>
 		<button id="setKeyButton">Legg inn</button>

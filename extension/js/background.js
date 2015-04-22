@@ -16,7 +16,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 			dp.private_key.setKey(request.data);
 		} catch (e) {
 			console.error('Klarte ikke å parse nøkkel', e);
-			sendResponse({hasKey: false, error: 'Klarte ikke å laste inn nøkkel'});
+			sendResponse({hasKey: false, error: 'Klarte ikke å laste inn nøkkel. Er du sikker på at den er på gyldig format?'});
 		}
 
 		return sendResponse({hasKey: dp.private_key.hasKey()});
