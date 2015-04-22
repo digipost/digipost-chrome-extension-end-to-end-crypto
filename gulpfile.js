@@ -42,7 +42,10 @@ gulp.task('bump', function() {
 });
 
 gulp.task('release', function(callback) {
-	runSequence('lint', 'bump', 'package', callback);
+	runSequence('lint', 'bump', 'package', function() {
+		console.log('Done releasing! Nothing has been pushed to Github, so please review the release manually and push or rollback. Remember to delete the tag if you want to roll back the release.');
+		if (typeof callback == 'function') callback.apply(this, arguments);
+	});
 });
 
 gulp.task('default', taskListing);
@@ -53,6 +56,5 @@ function inc(importance) {
 		.pipe(bump({type: importance}))
 		.pipe(gulp.dest('./extension'))
 	 	.pipe(git.commit('Released new version'))
-	 	.pipe(tag_version())
-		.pipe(git.push('origin', 'master'));
+	 	.pipe(tag_version());
 }
