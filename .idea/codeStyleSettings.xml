@@ -18,6 +18,11 @@
         <XML>
           <option name="XML_LEGACY_SETTINGS_IMPORTED" value="true" />
         </XML>
+        <codeStyleSettings language="CSS">
+          <indentOptions>
+            <option name="USE_TAB_CHARACTER" value="true" />
+          </indentOptions>
+        </codeStyleSettings>
         <codeStyleSettings language="JavaScript">
           <indentOptions>
             <option name="INDENT_SIZE" value="2" />
