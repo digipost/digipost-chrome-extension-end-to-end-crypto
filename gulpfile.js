@@ -7,6 +7,7 @@ var clean = require('gulp-clean');
 var git = require('gulp-git');
 var bump = require('gulp-bump');
 var tag_version = require('gulp-tag-version');
+var yargs = require('yargs');
 
 gulp.task('lint', function() {
 	return gulp.src('extension/js/*.js')
@@ -25,12 +26,20 @@ gulp.task('clean', function() {
 		.pipe(clean());
 });
 
-gulp.task('patch', function() { return inc('patch'); });
-gulp.task('feature', function() { return inc('minor'); });
-gulp.task('release', function() { return inc('major'); });
+gulp.task('bump', function() {
+	var importance = yargs.argv.ver;
+	const possibleImportances = ['patch', 'minor', 'major'];
+
+	if (!importance || possibleImportances.indexOf(importance) == -1) {
+		var defaultImportance = possibleImportances[0];
+		console.log('No or invalid version type provided. Using ' + defaultImportance + '. To specify your own, specify --ver=[' + possibleImportances.join('|') + ']');
+		importance = defaultImportance;
+	}
+
+	return inc(importance);
+});
 
 gulp.task('default', taskListing);
-
 
 function inc(importance) {
 	return gulp.src(['extension/manifest.json'])

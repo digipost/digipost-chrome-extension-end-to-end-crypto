@@ -10,7 +10,8 @@
     "gulp-jshint": "^1.10.0",
     "gulp-tag-version": "^1.2.1",
     "gulp-task-listing": "^1.0.0",
-    "gulp-zip": "^3.0.2"
+    "gulp-zip": "^3.0.2",
+    "yargs": "^3.7.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
