@@ -4,3 +4,4 @@
 !.idea/codeStyleSettings.xml
 *.iml
 node_modules
+dist

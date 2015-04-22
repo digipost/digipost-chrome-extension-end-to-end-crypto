@@ -5,7 +5,8 @@
   "devDependencies": {
     "gulp": "^3.8.11",
     "gulp-jshint": "^1.10.0",
-    "gulp-task-listing": "^1.0.0"
+    "gulp-task-listing": "^1.0.0",
+    "gulp-zip": "^3.0.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
