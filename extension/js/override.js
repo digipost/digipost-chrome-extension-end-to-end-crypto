@@ -16,7 +16,7 @@
 	document.addEventListener('decrypted', hideSpinner);
 	document.addEventListener('decrypted', showDecryptedDocument);
 	document.addEventListener('decryption-failed', hideSpinner);
-	document.addEventListener('decryption-failed', showEncryptionFailedError);
+	document.addEventListener('decryption-failed', showDecryptionFailedError);
 
 	function showDecryptionSpinner() {
 		hideSpinner();
@@ -46,8 +46,24 @@
 		$('a[download]').attr('href', data.detail.url);
 	}
 
-	function showEncryptionFailedError(e) {
+	/**
+	 * Display a modal dialog and an error message explaining why decrypting failed, including a link where
+	 * the user can download the encrypted content to try to decrypt it locally.
+	 */
+	function showDecryptionFailedError(e) {
 		dp.modal.show(e.detail.error);
+
+		var downloadLink = $('a[download]');
+		var downloadButton = $('<p>').html($('<a>').addClass('button')
+			.attr('href', downloadLink.attr('href')).attr('download', downloadLink.attr('download'))
+			.append('Last ned filen'));
+
+		var decryptionFailedError = $('<div>').addClass('fallback splash')
+			.append($('<i>').addClass('fa fa-lock'))
+			.append($('<p>').text('Klarte ikke å dekryptere brevet. Du kan fortsatt laste ned filen kryptert og forsøke å dekryptere den lokalt på din egen maskin.'))
+			.append($('<p>').addClass('last buttons').append(downloadButton)).outerHTML();
+
+		$('.content').empty().append(decryptionFailedError);
 	}
 
 	/**
@@ -97,6 +113,17 @@
 				// Trigger the content script to start processing the encrypted document.
 				emit('processEncryptedDocument', {contentUri: this.doc.contentUri()});
 			};
+		}
+
+		/**
+		 * The extension decrypts any encrypted content, and as far as Digipost is concerned no documents will be encrypted as long as the extension is running.
+		 * This is used to indicate that the browser may attempt to render the document in the browser,
+		 * instead of displaying a message telling the user to download the document to his or her computer.
+		 */
+		if (dp.models.doc) {
+			dp.models.doc.contentIsEncrypted = function () {
+				return false;
+			}
 		}
 	}
 
