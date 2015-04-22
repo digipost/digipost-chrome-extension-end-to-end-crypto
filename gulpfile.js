@@ -36,9 +36,6 @@ function inc(importance) {
 	return gulp.src(['extension/manifest.json'])
 		// Bump version numbers in files with version
 		.pipe(bump({type: importance}))
-
-		// Write it back to filesystem. manifest.json must be written to extension folder,
-		// others are written to root. Sweet.
 		.pipe(gulp.dest('./extension'))
 	 	.pipe(git.commit('Bumped package version for ' + importance))
 	 	.pipe(tag_version());
