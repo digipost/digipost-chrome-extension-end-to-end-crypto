@@ -9,11 +9,13 @@ var git = require('gulp-git');
 var bump = require('gulp-bump');
 var tag_version = require('gulp-tag-version');
 var yargs = require('yargs');
+var runSequence = require('run-sequence');
 
 gulp.task('lint', function() {
 	return gulp.src('extension/js/*.js')
 		.pipe(jshint())
-		.pipe(jshint.reporter(stylish));
+		.pipe(jshint.reporter(stylish))
+		.pipe(jshint.reporter('fail'));
 });
 
 gulp.task('package', ['clean'], function() {
@@ -38,6 +40,10 @@ gulp.task('bump', function() {
 	}
 
 	return inc(importance);
+});
+
+gulp.task('release', function(callback) {
+	runSequence('lint', 'bump', 'package', callback);
 });
 
 gulp.task('default', taskListing);
