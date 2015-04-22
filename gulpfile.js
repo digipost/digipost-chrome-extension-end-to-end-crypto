@@ -53,5 +53,6 @@ function inc(importance) {
 		.pipe(bump({type: importance}))
 		.pipe(gulp.dest('./extension'))
 	 	.pipe(git.commit('Bumped package version for ' + importance))
-	 	.pipe(tag_version());
+	 	.pipe(tag_version())
+		.pipe(git.push('origin', 'master'));
 }
