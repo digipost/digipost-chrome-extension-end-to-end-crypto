@@ -2,9 +2,9 @@
   "name": "digipost-chrome-extension-end-to-end-crypto",
   "description": "Digipost Chrome Extension for ende-til-ende-kryptering ---------------------------------------------------",
   "devDependencies": {
+    "del": "^1.1.1",
     "gulp": "^3.8.11",
     "gulp-bump": "^0.3.0",
-    "gulp-clean": "^0.3.1",
     "gulp-filter": "^2.0.2",
     "gulp-git": "^1.2.1",
     "gulp-jshint": "^1.10.0",

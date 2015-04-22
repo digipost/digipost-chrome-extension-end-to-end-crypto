@@ -4,7 +4,7 @@ var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
 var taskListing = require('gulp-task-listing');
 var zip = require('gulp-zip');
-var clean = require('gulp-clean');
+var del = require('del');
 var git = require('gulp-git');
 var bump = require('gulp-bump');
 var tag_version = require('gulp-tag-version');
@@ -24,9 +24,8 @@ gulp.task('package', ['clean'], function() {
 		.pipe(gulp.dest('dist'))
 });
 
-gulp.task('clean', function() {
-	return gulp.src('dist/', { read: false })
-		.pipe(clean());
+gulp.task('clean', function(callback) {
+	del(['dist/'], callback);
 });
 
 gulp.task('bump', function() {
