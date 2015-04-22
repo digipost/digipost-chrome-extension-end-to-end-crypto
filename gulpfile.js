@@ -16,13 +16,8 @@ gulp.task('package', function() {
 	return gulp.src('extension/**')
 		.pipe(zip('extension.zip'))
 		.pipe(gulp.dest('dist'))
-		.pipe(function() {
-			return {
-				on: function() {
-					console.log(arguments);
-				}
-			}
-		});
 });
+
+
 
 gulp.task('default', taskListing);
