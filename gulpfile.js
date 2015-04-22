@@ -19,6 +19,7 @@ gulp.task('lint', function() {
 });
 
 gulp.task('package', ['clean'], function() {
+	console.log('Packaging the extension to the dist folder');
 	return gulp.src('extension/**')
 		.pipe(zip('extension.zip'))
 		.pipe(gulp.dest('dist'))
