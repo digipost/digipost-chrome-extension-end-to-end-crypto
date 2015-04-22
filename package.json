@@ -1,0 +1,23 @@
+{
+  "name": "digipost-chrome-extension-end-to-end-crypto",
+  "version": "0.0.3",
+  "description": "Digipost Chrome Extension for ende-til-ende-kryptering ---------------------------------------------------",
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-jshint": "^1.10.0",
+    "gulp-task-listing": "^1.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/digipost/digipost-chrome-extension-end-to-end-crypto"
+  },
+  "author": "",
+  "license": "Apache License, Version 2.0",
+  "bugs": {
+    "url": "https://github.com/digipost/digipost-chrome-extension-end-to-end-crypto/issues"
+  },
+  "homepage": "https://github.com/digipost/digipost-chrome-extension-end-to-end-crypto"
+}
