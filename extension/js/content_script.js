@@ -88,7 +88,7 @@
 		if (data[0] !== bom[0] || data[1] !== bom[1] || data[2] !== bom[2]) {
 			data = bom.concat(data);
 		}
-		var html = String.fromCharCode.apply(this, data);
+		var html = String.fromCharCode(data);
 		var purified = DOMPurify.sanitize(html, {WHOLE_DOCUMENT: true});
 		return stringToUint8Array(purified);
 	}
