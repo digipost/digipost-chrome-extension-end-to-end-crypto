@@ -88,7 +88,7 @@
 		if (data[0] !== bom[0] || data[1] !== bom[1] || data[2] !== bom[2]) {
 			data = bom.concat(data);
 		}
-		var html = String.fromCharCode(data);
+		var html = String.fromCharCode.apply(undefined, data); // Undefined this. fromCharCode is static, we only use apply because it accepts bytes as multiple arguments rather than array.
 		var purified = DOMPurify.sanitize(html, {WHOLE_DOCUMENT: true});
 		return stringToUint8Array(purified);
 	}
