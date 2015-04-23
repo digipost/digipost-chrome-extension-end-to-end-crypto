@@ -19,6 +19,10 @@ Biblioteker
 -----------
 * **forge.bundle.js** - node-forge patchet med https://github.com/digitalbazaar/forge/pull/201 og bygget med npm run minify.
 
+Publisering
+-----------
+Utvidelsen bruker [Gulp](http://gulpjs.com/) til bygging. Kommandoen `gulp` viser hvilke operasjoner som er tilgjengelige. `gulp package` bygger et zip-arkiv som legges i mappen `dist`. De nye versjonene publiseres i [WebStore Developer Dashboard](https://chrome.google.com/webstore/developer/dashboard).
+
 Lisens
 ------
 
