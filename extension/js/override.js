@@ -80,7 +80,7 @@
 					return url;
 				}
 				return dp.url.real_normalize(url);
-			}
+			};
 		}
 
 		/**
@@ -94,7 +94,7 @@
 				options = options || {};
 				options.sandbox = '';
 				return dp.embed.real_html(options);
-			}
+			};
 		}
 
 		/**
@@ -123,7 +123,7 @@
 		if (dp.models.doc) {
 			dp.models.doc.contentIsEncrypted = function () {
 				return false;
-			}
+			};
 		}
 	}
 
