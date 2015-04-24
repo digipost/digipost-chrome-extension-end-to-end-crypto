@@ -88,7 +88,7 @@
 		if (data[0] !== bom[0] || data[1] !== bom[1] || data[2] !== bom[2]) {
 			data = bom.concat(data);
 		}
-		var html = String.fromCharCode.apply(undefined, data); // Undefined this. fromCharCode is static, we only use apply because it accepts bytes as multiple arguments rather than array.
+		var html = uint8ArrayToString(data);
 		var purified = DOMPurify.sanitize(html, {WHOLE_DOCUMENT: true});
 		return stringToUint8Array(purified);
 	}
@@ -102,6 +102,11 @@
 		return (window.URL || window.webkitURL).createObjectURL(blob);
 	}
 
+	function uint8ArrayToString(data) {
+		// Undefined this. fromCharCode is static, we only use apply because it accepts bytes as multiple arguments rather than array.
+		return String.fromCharCode.apply(undefined, data);
+	}
+
 	function stringToUint8Array(str) {
 		var arr = new Uint8Array(str.length);
 		var j = str.length;
@@ -110,6 +115,7 @@
 		}
 		return arr;
 	}
+
 
 	function failed(message) {
 		document.dispatchEvent(new CustomEvent('failed', {detail: message}));
