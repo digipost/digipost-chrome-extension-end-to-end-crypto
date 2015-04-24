@@ -3,7 +3,7 @@
   "short_name": "Digipost",
   "name": "Digipost ende-til-ende-kryptering",
   "description": "Dekrypter ende-til-ende-krypterte meldinger i Digipost direkte i nettleseren din!",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "icons": {
     "16": "icons/app16.png",
     "48": "icons/app48.png",
