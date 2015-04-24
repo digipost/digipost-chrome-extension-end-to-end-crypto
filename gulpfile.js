@@ -28,13 +28,13 @@ gulp.task('lint', function() {
 		.pipe(jshint.reporter('fail'));
 });
 
-gulp.task('package', ['copy', 'clean'], function() {
+gulp.task('package', function() {
 		return gulp.src('dist/build/**')
 			.pipe(zip('extension.zip'))
 			.pipe(gulp.dest('dist'))
 });
 
-gulp.task('copy', ['clean'], function(cb) {
+gulp.task('copy', function(cb) {
 	console.log('Packaging the extension to the dist folder');
 
 	mkdirp('dist/build', function (mkdirErr) {
@@ -63,7 +63,7 @@ gulp.task('bump', function () {
 });
 
 gulp.task('release', function (callback) {
-	runSequence('lint', 'bump', 'copy', 'permissions', 'package', function () {
+	runSequence('lint', 'bump', 'clean', 'copy', 'permissions', 'package', function () {
 		console.log('Done releasing! Nothing has been pushed to Github, so please review the release manually and push or rollback. Remember to delete the tag if you want to roll back the release.');
 		if (typeof callback == 'function') callback.apply(this, arguments);
 	});
