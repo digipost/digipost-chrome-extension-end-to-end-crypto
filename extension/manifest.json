@@ -35,7 +35,7 @@
     {
       "js": [
         "js/vendor/forge.bundle.js",
-        "js/vendor/purify.js",
+        "js/vendor/DOMPurify-0.6.3.js",
         "js/content_script.js"
       ],
       "run_at": "document_end",
