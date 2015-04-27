@@ -34,13 +34,13 @@ gulp.task('package', function() {
 			.pipe(gulp.dest('dist'))
 });
 
-gulp.task('copy', function(cb) {
+gulp.task('copy', function(callback) {
 	console.log('Packaging the extension to the dist folder');
 
 	mkdirp('dist/build', function (mkdirErr) {
 		ncp('extension', 'dist/build', function (copyErr) {
 			if (mkdirErr || copyErr) return console.error("Unable to copy extension folder", mkdirErr, copyErr);
-			cb();
+			callback();
 		});
 	});
 });
@@ -94,13 +94,13 @@ function inc(importance) {
  * Overrides permission and matching URLs in manifest files to avoid publishing version with development URLs.
  */
 function manifest_urls(options) {
-	return through.obj(function (file, enc, cb) {
+	return through.obj(function (file, enc, callback) {
 		var manifestJson = JSON.parse(file.contents.toString());
 
 		manifestJson.permissions = manifestJson.permissions.filter(removeUrls).concat(options.permission_urls);
 
 		if (manifestJson.content_scripts.length != 1) {
-			return cb(new gutil.PluginError('gulpfile.js', 'We only support exactly one content script block.', {
+			return callback(new gutil.PluginError('gulpfile.js', 'We only support exactly one content script block.', {
 				fileName: file.path,
 				showStack: true
 			}));
@@ -110,7 +110,7 @@ function manifest_urls(options) {
 		file.contents = new Buffer(JSON.stringify(manifestJson, null, '  ') + '\n');
 
 		gutil.log('Set permission URLs to  ' + gutil.colors.cyan(options.permission_urls.join(', ')) + ' and content script URLs to ' + gutil.colors.cyan(options.content_script_urls.join(', ')));
-		return cb(null, file);
+		return callback(null, file);
 	});
 
 	function removeUrls(item) {
