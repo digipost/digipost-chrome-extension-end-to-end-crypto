@@ -26,7 +26,7 @@ h3. Fra kildekode
 4. Trykk "Load unpacked extension…"-knappen oppe til venstre
 5. Velg `extension`-mappa i kildekoden du lastet ned
 
-Hvis installasjonen lyktes skal du nå se et lite Digipost-ikon i adressefeltet hvis du går til `www.digipost.no`. 
+Hvis installasjonen lyktes skal du nå se et lite Digipost-ikon i adressefeltet hvis du går til [digipost.no](https://www.digipost.no). 
 
 Filer
 -----
