@@ -7,6 +7,27 @@ Utvidelsen er open source, og teknisk kyndige brukere oppfordres til å lese gje
 
 Siden utvidelser til Google Chrome ikke har tilgang på sikker lagring vil den private nøkkelen lagres i minnet, og forsvinne dersom nettleseren lukkes.
 
+
+Installasjon
+------------
+Utvidelsen kan enten installeres fra Chrome Web Store eller direkte fra kildekoden. Å installere fra Web Store gjøres med to enkle klikk, og du vil i  tillegg automatisk få nye versjoner når vi gjør forbedringer i utvidelsen. Hvis du installerer direkte fra kildekoden har du full kontroll over koden som kjører i utvidelsen. Ulempen er at du selv må hente ned nye versjoner. Det kan bety at utvidelsen slutter å virke hvis vi gjør endringer som ikke er bakoverkompatible.
+
+h3. Fra Chrome Web Store
+
+Utvidelsen er publisert i [Chrome Web Store](https://chrome.google.com/webstore/detail/digipost-ende-til-ende-kr/faffhbmmemiihphlofdhaolhamjllieg).
+ 
+h3. Fra kildekode
+
+Å installere fra kildekoden krever litt mer forkunnskaper enn å installere fra Chrome Web Store. Det er likevel ikke vanskelig hvis du har litt erfaring med Git og Github.
+
+1. Sjekk ut eller last ned kildekoden fra dette repositoriet
+2. Skriv inn `chrome://extensions` i adressefeltet i Chrome
+3. Kryss av for "Developer mode" opp til høyre
+4. Trykk "Load unpacked extension…"-knappen oppe til venstre
+5. Velg `extension`-mappa i kildekoden du lastet ned
+
+Hvis installasjonen lyktes skal du nå se et lite Digipost-ikon i adressefeltet hvis du går til `www.digipost.no`. 
+
 Filer
 -----
 * **background.js** - Tar i mot meldinger for operasjoner som skal kjøres i bakgrunnen, typisk dekryptering.
