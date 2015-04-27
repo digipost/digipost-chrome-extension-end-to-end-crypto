@@ -38,7 +38,8 @@ Filer
 
 Biblioteker
 -----------
-* **forge.bundle.js** - node-forge patchet med https://github.com/digitalbazaar/forge/pull/201 og bygget med npm run minify.
+* [node-forge](https://github.com/digitalbazaar/forge) patchet med https://github.com/digitalbazaar/forge/pull/201 og bygget med npm run minify. Brukes til kryptooperasjoner.
+* [DOMPurify](https://github.com/cure53/DOMPurify) brukes til å vaske krypterte HTML-brev for farlig innhold før visning
 
 Publisering
 -----------
