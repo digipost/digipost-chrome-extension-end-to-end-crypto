@@ -64,7 +64,10 @@ gulp.task('bump', function () {
 
 gulp.task('release', function (callback) {
 	runSequence('lint', 'bump', 'clean', 'copy', 'permissions', 'package', function () {
-		console.log('Done releasing! Nothing has been pushed to Github, so please review the release manually and push or rollback. Remember to delete the tag if you want to roll back the release.');
+		console.log('Done releasing! Nothing has been pushed to Github, so please review the release manually and push or rollback. ' +
+		'Remember to delete the tag if you want to roll back the release.');
+
+		console.log('Remember to add --tag when pushing, to have the release tags pushed as well: ' + gutil.colors.cyan('git push --tag'));
 		if (typeof callback == 'function') callback.apply(this, arguments);
 	});
 });
