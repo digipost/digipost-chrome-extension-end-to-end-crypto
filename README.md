@@ -12,11 +12,11 @@ Installasjon
 ------------
 Utvidelsen kan enten installeres fra Chrome Web Store eller direkte fra kildekoden. Å installere fra Web Store gjøres med to enkle klikk, og du vil i  tillegg automatisk få nye versjoner når vi gjør forbedringer i utvidelsen. Hvis du installerer direkte fra kildekoden har du full kontroll over koden som kjører i utvidelsen. Ulempen er at du selv må hente ned nye versjoner. Det kan bety at utvidelsen slutter å virke hvis vi gjør endringer som ikke er bakoverkompatible.
 
-h3. Fra Chrome Web Store
+#### Fra Chrome Web Store
 
 Utvidelsen er publisert i [Chrome Web Store](https://chrome.google.com/webstore/detail/digipost-ende-til-ende-kr/faffhbmmemiihphlofdhaolhamjllieg).
  
-h3. Fra kildekode
+#### Fra kildekode
 
 Å installere fra kildekoden krever litt mer forkunnskaper enn å installere fra Chrome Web Store. Det er likevel ikke vanskelig hvis du har litt erfaring med Git og Github.
 
