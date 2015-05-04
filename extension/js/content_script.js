@@ -72,29 +72,38 @@
 	 */
 	function handleDecrypted(data, contentType) {
 		if (contentType.indexOf('html') > 0) {
-			data = sanitize_html(data);
+			data = prepareHtmlForDisplay(data);
 		}
 		var blobUrl = createBlob(data, contentType);
 
 		// Signal to the override script that download and decryption completed successfully
-		emit('decrypted', {
-			url: blobUrl,
-			contentType: contentType
-		});
+		emit('decrypted', { url: blobUrl });
 	}
 
-	function sanitize_html(data) {
-		var bom = new Uint8Array([0xef, 0xbb, 0xbf]);
-		if (data[0] !== bom[0] || data[1] !== bom[1] || data[2] !== bom[2]) {
-			var bomPrefixed = new Uint8Array(bom.byteLength + data.byteLength);
-			bomPrefixed.set(bom, 0);
-			bomPrefixed.set(data, bom.byteLength);
-			data = bomPrefixed;
-		}
-		var html = uint8ArrayToString(data);
-		var purified = DOMPurify.sanitize(html, {WHOLE_DOCUMENT: true});
-		return stringToUint8Array(purified);
+	function prepareHtmlForDisplay(data) {
+		var htmlString = uint8ArrayToString(data);
+		var purified = DOMPurify.sanitize(htmlString, {WHOLE_DOCUMENT: true});
+		var purifiedBytes = stringToUint8Array(purified);
+		var purifiedBytesWithBomHeader = addBomHeader(purifiedBytes);
+		return purifiedBytesWithBomHeader;
 	}
+
+	/**
+	 * Add BOM (Byte Order Mark) header to uint8 array. This hints that the contents is UTF-8 encoded, so that it will later be rendered correct.
+	 */
+	function addBomHeader(uint8Array) {
+		const bom = new Uint8Array([0xef, 0xbb, 0xbf]);
+		if (uint8Array[0] === bom[0] || uint8Array[1] === bom[1] || uint8Array[2] === bom[2]) {
+			// Already contains BOM header
+			return data;
+		}
+
+		var bomPrefixed = new Uint8Array(bom.byteLength + uint8Array.byteLength);
+		bomPrefixed.set(bom, 0);
+		bomPrefixed.set(uint8Array, bom.byteLength);
+		return bomPrefixed;
+	}
+
 
 	/**
 	 * Creates an addressable blob uri from the in memory array of decrypted data, which later can be embedded for displaying
