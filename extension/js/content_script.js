@@ -77,10 +77,7 @@
 		var blobUrl = createBlob(data, contentType);
 
 		// Signal to the override script that download and decryption completed successfully
-		emit('decrypted', {
-			url: blobUrl,
-			contentType: contentType
-		});
+		emit('decrypted', { url: blobUrl });
 	}
 
 	function prepareHtmlForDisplay(data) {
