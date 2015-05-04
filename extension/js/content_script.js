@@ -84,9 +84,12 @@
 	}
 
 	function sanitize_html(data) {
-		var bom = [0xef, 0xbb, 0xbf];
+		var bom = new Uint8Array([0xef, 0xbb, 0xbf]);
 		if (data[0] !== bom[0] || data[1] !== bom[1] || data[2] !== bom[2]) {
-			data = bom.concat(data);
+			var bomPrefixed = new Uint8Array(bom.byteLength + data.byteLength);
+			bomPrefixed.set(bom, 0);
+			bomPrefixed.set(data, bom.byteLength);
+			data = bomPrefixed;
 		}
 		var html = uint8ArrayToString(data);
 		var purified = DOMPurify.sanitize(html, {WHOLE_DOCUMENT: true});
