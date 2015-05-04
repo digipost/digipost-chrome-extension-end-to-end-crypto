@@ -22,6 +22,12 @@
 	});
 
 
+	chrome.runtime.onMessage.addListener(function (request) {
+		if (request.to === 'content_script' && request.message === 'key_added') {
+			emit('key_added');
+		}
+	});
+
 	function download(url) {
 		console.debug('Downloading document');
 		console.time('Download');
