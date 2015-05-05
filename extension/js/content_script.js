@@ -98,7 +98,7 @@
 	 * Add BOM (Byte Order Mark) header to uint8 array. This hints that the contents is UTF-8 encoded, so that it will later be rendered correct.
 	 */
 	function addBomHeader(uint8Array) {
-		const bom = new Uint8Array([0xef, 0xbb, 0xbf]);
+		var bom = new Uint8Array([0xef, 0xbb, 0xbf]);
 		if (uint8Array[0] === bom[0] || uint8Array[1] === bom[1] || uint8Array[2] === bom[2]) {
 			// Already contains BOM header
 			return data;
