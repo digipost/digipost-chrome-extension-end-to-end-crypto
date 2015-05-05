@@ -18,6 +18,17 @@
 	document.addEventListener('decryption-failed', hideSpinner);
 	document.addEventListener('decryption-failed', showDecryptionFailedError);
 
+	// Try to decrypt the current document when a key is added, as users often add key after having opened a document
+	document.addEventListener('key_added', decrypt);
+
+	function decrypt() {
+		// Only try to decrypt the document if we're currently at a page where decryption has failed (meaning that there is something to decrypt!)
+		if ($('#e2e-decryption-failed').length === 1) {
+			// Init javascript in context of the active content view
+			dp.views.content.init.apply(activeContentView);
+		}
+	}
+
 	function showDecryptionSpinner() {
 		hideSpinner();
 		dp.spinner.show({label: 'Dekrypterer dokument…'});
@@ -58,7 +69,7 @@
 			.attr('href', downloadLink.attr('href')).attr('download', downloadLink.attr('download'))
 			.append('Last ned filen'));
 
-		var decryptionFailedError = $('<div>').addClass('fallback splash')
+		var decryptionFailedError = $('<div>').attr('id', 'e2e-decryption-failed').addClass('fallback splash')
 			.append($('<i>').addClass('fa fa-lock'))
 			.append($('<p>').text('Klarte ikke å dekryptere brevet. Du kan fortsatt laste ned filen kryptert og forsøke å dekryptere den lokalt på din egen maskin.'))
 			.append($('<p>').addClass('last buttons').append(downloadButton)).outerHTML();
