@@ -1,3 +1,5 @@
+# Arkivert - Dette repoet vedlikeholdes ikke lenger
+
 Digipost Chrome Extension for ende-til-ende-kryptering
 ---------------------------------------------------
 
